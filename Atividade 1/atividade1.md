@@ -55,7 +55,6 @@ Exemplo: Classe: Celular; Atributos: cor, marca, armazenamento; Métodos: tirarF
 
 ---
 
-### Questões 7, 8 e 9 nos arquivos do repositório. 
+### Questões 7, 8, 9 e 10 nos arquivos do repositório. 
 
-### 10) A questão 10 também está arquivada no repositório
 
