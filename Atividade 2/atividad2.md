@@ -67,7 +67,7 @@ que acontece e comente sobre.
 
 Os resultados serão os mesmos observados no código em JavaScript, haja vista que o código final é nessa linguagem.
 
-10, 11, 12, 13, 14 
+10, 11, 12, 13, 14 foram respondidas em código
 
 16. A opção "allowUnreachableCode" controla como o compilador lida com uma linha de código que não pode ser executada. Quando a opção está configurada como "false" o compilador emite um erro. Quando a opção está configurada como "true" o compilador ignora esse tipo de situação, não alertando sobre o erro, e o código consegue ser compilado.
 
