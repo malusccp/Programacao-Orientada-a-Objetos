@@ -1,34 +1,40 @@
 
-// c) Associar um cliente a uma conta
-// • Método: associarContaCliente(numeroConta: string, cpfCliente:
-// string): void
-// • Procure o cliente e a conta com os dados fornecidos e associe-os,
-// respeitando considernado que o cliente não pode ter a mesma conta
-// adicionada mais de uma vez.
-// d) Listar contas de um cliente
-// • Método: listarContasCliente(cpf: string): Conta[]
-// • Retorne todas as contas associadas ao cliente cujo CPF foi
-// informado.
-// e) Totalizar saldo por cliente
-// • Método: totalizarSaldoCliente(cpf: string): number
-// • Calcule e retorne o saldo total de todas as contas de um cliente.
-// f) Incluir um cliente
-// • Método: inserirCliente(cliente: Cliente): void
-// • Adicione o cliente ao array de clientes, respeitando as seguintes
-// regras:
-// • Não permitir que um cliente com o mesmo id ou cpf seja cadastrado
-// mais de uma vez.
-
-// g) Alterar o método de incluir uma conta
-// • Método: inserirConta(conta: Conta): void
-// • Adicione a conta ao array de contas, não permitindo que uma conta
-// com o mesmo id ou numero seja criada.
 class Banco {
     clientes: Cliente[] = [];
+
     contas: Conta[] = [];
 
-    inserirCliente(cliente: Cliente):void{
-        this.clientes.push(cliente);
+    inserirCliente(novoCliente: Cliente):void{
+
+        let duplicado: boolean = false;
+
+        for (let cliente of this.clientes){
+            if(cliente.cpf == novoCliente.cpf || cliente.id == novoCliente.id){
+                duplicado = true;
+                break
+            }
+        }
+        if(duplicado == false){
+            this.clientes.push(novoCliente)
+        }
+    
+        
+    }
+
+    inserirConta(novaConta: Conta): void{
+                let duplicada: boolean = false;
+
+        for (let conta of this.contas){
+            if(conta.numero == novaConta.numero || conta.id == novaConta.id){
+                duplicada = true;
+                break
+            }
+        }
+        if(duplicada == false){
+            this.contas.push(novaConta)
+        }
+    
+
     }
     
     consultarCliente(cpf: string): Cliente {
@@ -41,23 +47,61 @@ class Banco {
         }
         return clienteProcurado;
     }
-    associarContaCliente(){
-        
+    associarContaCliente(numeroConta: string, cpfCliente: string): void{
+        let clienteEncontrado = this.consultarCliente(cpfCliente);
+
+        let contaEncontrada!: Conta;
+
+        for (let conta of this.contas){
+            if(conta.numero == numeroConta){
+                let contaEncontrada = conta;
+                break;
+            }
+
+        }
+        if(clienteEncontrado && contaEncontrada){
+
+            if(!clienteEncontrado.contas.includes(contaEncontrada)){
+                contaEncontrada.cliente = clienteEncontrado;
+                clienteEncontrado.contas.push(contaEncontrada);
+            }
+
+
+        }
+    }
+
+    listarContasClientes(cpf: string):Conta[]{
+        let clienteEncontrado = this.consultarCliente(cpf);
+        let contaEncontrada = clienteEncontrado.contas;
+        return contaEncontrada;
+
+    }
+
+    totalizarSaldoCliente(cpf: string): number{
+        let saldoTotal: number = 0;
+        let contasCliente = this.listarContasClientes(cpf)
+
+        for (let conta of contasCliente){
+            saldoTotal += conta.saldo
+        }
+
+        return saldoTotal
     }
     
-
     }
 
 class Conta{
     id: number;
     cliente: Cliente;
-    numero: string
+    numero: string;
+    saldo: number;
     dataAbertura: Date;
 
-    constructor(id: number, cliente: Cliente, dataAbertura: Date, numero: string){
+    constructor(id: number, cliente: Cliente, dataAbertura: Date, numero: string, saldo: number){
         this.id = id;
         this.cliente = cliente;
         this.numero = numero;
+        this.saldo = saldo;
         this.dataAbertura = dataAbertura;
     }
 
